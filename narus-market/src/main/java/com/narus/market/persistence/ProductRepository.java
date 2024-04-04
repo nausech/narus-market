@@ -1,40 +1,55 @@
 package com.narus.market.persistence;
 
+import com.narus.market.domain.ProductDao;
+import com.narus.market.domain.repository.ProductRepositoryInterface;
 import com.narus.market.persistence.crud.ProductCrudRepository;
-import com.narus.market.persistence.entity.Product;
+import com.narus.market.persistence.entity.ProductEntity;
+import com.narus.market.persistence.mapper.ProductMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class ProductRepository {
+public class ProductRepository implements ProductRepositoryInterface {
+    @Autowired
     private ProductCrudRepository productCrudRepository;
 
-    public List<Product> getAll(){
-        return (List<Product>) productCrudRepository.findAll();
+    @Autowired
+    private ProductMapper mapper;
+
+    @Override
+    public List<ProductDao> getAll() {
+        List<ProductEntity> product = (List<ProductEntity>) productCrudRepository.findAll();
+        return mapper.toProductsEntity(product);
     }
 
-    public List<Product> getByCategory(int categoryId){
-        return  productCrudRepository.findByIdCategoryOrderByNameAsc(categoryId);
+    @Override
+    public Optional<List<ProductDao>> getByCategory(int categoryId) {
+        List<ProductEntity> products = productCrudRepository.findByIdCategoryOrderByNameAsc(categoryId);
+        return Optional.of(mapper.toProductsEntity(products));
     }
 
-    public Optional<List<Product>> getShortage(int quantity){
-        return productCrudRepository.findByStockLessThanAndStatus(quantity, true);
+    @Override
+    public Optional<List<ProductDao>> getScarseProducts(int quantity) {
+        Optional<List<ProductEntity>> products = productCrudRepository.findByStockLessThanAndStatus(quantity, true);
+        return products.map(prods -> mapper.toProductsEntity(prods));
     }
 
-    public Optional<Product> getProduct(int productId){
-        return productCrudRepository.findById(productId);
+    @Override
+    public Optional<ProductDao> getProduct(int productId) {
+        return productCrudRepository.findById(productId).map(product -> mapper.toProductEntity(product));
     }
 
-    public Product save(Product product){
-        return productCrudRepository.save(product);
+    @Override
+    public ProductDao save(ProductDao product) {
+        ProductEntity productEntity = mapper.toProductDao(product);
+        return mapper.toProductEntity(productCrudRepository.save(productEntity));
     }
 
-    public void delete(int productId){
+    @Override
+    public void delete(int productId) {
         productCrudRepository.deleteById(productId);
     }
-
-
-
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "categorias")
-public class Category {
+public class CategoryEntity {
 
 
     @Id
@@ -17,8 +17,11 @@ public class Category {
     @Column(name = "nombre")
     private String name;
 
+    @Column(name = "estado")
+    private Boolean status;
+
     @OneToMany(mappedBy = "category")
-    private List<Product> products;
+    private List<ProductEntity> products;
 
     public Integer getIdCategory() {
         return idCategory;
@@ -44,6 +47,4 @@ public class Category {
         this.status = status;
     }
 
-    @Column(name = "estado")
-    private Boolean status;
 }

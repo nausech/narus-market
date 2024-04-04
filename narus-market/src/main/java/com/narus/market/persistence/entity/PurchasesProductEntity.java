@@ -3,7 +3,7 @@ package com.narus.market.persistence.entity;
 import jakarta.persistence.*;
 @Entity
 @Table(name = "compras_productos")
-public class PurchasesProduct {
+public class PurchasesProductEntity {
 
     @EmbeddedId
     private PurchasesProductPK id;
@@ -19,11 +19,11 @@ public class PurchasesProduct {
 
     @ManyToOne
     @JoinColumn(name = "id_compra", insertable = false, updatable = false)
-    private Purchase purchase;
+    private PurchaseEntity purchase;
 
     @ManyToOne
     @JoinColumn(name = "id_producto", insertable = false, updatable = false)
-    private Product product;
+    private ProductEntity product;
 
     public PurchasesProductPK getId() {
         return id;
