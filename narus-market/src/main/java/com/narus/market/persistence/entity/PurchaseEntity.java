@@ -40,8 +40,9 @@ public class PurchaseEntity {
     @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
     private ClientEntity client;
 
-    @OneToMany(mappedBy = "product")
-    private List<PurchasesProductEntity> products;
+    @ManyToOne
+    @JoinColumn(name = "id_producto", insertable = false, updatable = false)
+    private ProductEntity product;
 
     public String getIdClient() {
         return idClient;

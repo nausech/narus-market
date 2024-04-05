@@ -23,4 +23,21 @@ public class ProductService {
         return productRepository.getProduct(productId);
     }
 
+    public ProductDao save(ProductDao product) {
+        return productRepository.save(product);
+    }
+
+    public boolean delete(int productId) {
+        Optional<ProductDao> product = productRepository.getProduct(productId);
+        if (product.isEmpty()) {
+            return false;
+        } else {
+            productRepository.delete(productId);
+            return true;
+        }
+    }
+
+    public Optional<List<ProductDao>> getByCategory(int categoryId) {
+        return productRepository.getByCategory(categoryId);
+    }
 }

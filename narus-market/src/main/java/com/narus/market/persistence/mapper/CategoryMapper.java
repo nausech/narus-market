@@ -14,7 +14,7 @@ public interface CategoryMapper {
             @Mapping(source = "name", target = "category"),
             @Mapping(source = "status", target = "active")
     })
-    CategoryDao toCategory(CategoryEntity categoryEntity);
+    CategoryDao toCategoryEntity(CategoryEntity categoryEntity);
     @InheritInverseConfiguration
-    CategoryDao toCategory(CategoryDao category);
+    CategoryEntity toCategoryDao(CategoryDao category);
 }
