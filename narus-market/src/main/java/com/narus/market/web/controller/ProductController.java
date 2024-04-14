@@ -2,8 +2,9 @@ package com.narus.market.web.controller;
 
 import com.narus.market.domain.ProductDao;
 import com.narus.market.domain.service.ProductService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,24 +17,35 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-
-    public List<ProductDao> getAll() {
-        return productService.getAll();
+    @GetMapping
+    public ResponseEntity<List<ProductDao>> getAll() {
+        return new ResponseEntity<>(productService.getAll(), null, HttpStatus.OK);
     }
 
-    public Optional<ProductDao> getProduct(int productId) {
-        return productService.getProduct(productId);
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductDao> getProduct(@PathVariable int productId) {
+        return productService.getProduct(productId)
+                .map(product -> new ResponseEntity<>(product, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    public ProductDao save(ProductDao product) {
-        return productService.save(product);
+    @PostMapping
+    public ResponseEntity<ProductDao> save(@RequestBody  ProductDao product) {
+        return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
     }
 
-    public boolean delete(int productId) {
-        return productService.delete(productId);
+    @PostMapping("/delete/{productId}")
+    public ResponseEntity delete(@PathVariable int productId) {
+        if (productService.delete(productId)) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
-    public Optional<List<ProductDao>> getByCategory(int categoryId) {
+
+    @GetMapping("/category/{categoryId}")
+    public Optional<List<ProductDao>> getByCategory(@PathVariable int categoryId) {
         return productService.getByCategory(categoryId);
     }
 }

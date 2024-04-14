@@ -16,5 +16,6 @@ public interface CategoryMapper {
     })
     CategoryDao toCategoryEntity(CategoryEntity categoryEntity);
     @InheritInverseConfiguration
+    @Mapping(target = "products", ignore = true)
     CategoryEntity toCategoryDao(CategoryDao category);
 }

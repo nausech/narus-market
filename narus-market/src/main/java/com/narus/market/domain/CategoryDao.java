@@ -5,6 +5,8 @@ public class CategoryDao {
     private String category;
     private boolean isActive;
 
+    private ProductDao product;
+
     public int getCategoryId() {
         return categoryId;
     }

@@ -18,6 +18,7 @@ public interface ProductMapper {
             @Mapping(source = "price", target = "price"),
             @Mapping(source = "stock", target = "stock"),
             @Mapping(source = "status", target = "active"),
+            @Mapping(source = "category", target = "category")
     })
     ProductDao toProductEntity(ProductEntity product);
     List<ProductDao> toProductsEntity(List<ProductEntity> products);

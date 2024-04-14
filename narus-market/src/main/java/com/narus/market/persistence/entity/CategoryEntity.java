@@ -14,7 +14,7 @@ public class CategoryEntity {
     @Column(name = "id_categoria")
     private Integer idCategory;
 
-    @Column(name = "nombre")
+    @Column(name = "descripcion")
     private String name;
 
     @Column(name = "estado")
@@ -45,6 +45,14 @@ public class CategoryEntity {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public List<ProductEntity> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ProductEntity> products) {
+        this.products = products;
     }
 
 }

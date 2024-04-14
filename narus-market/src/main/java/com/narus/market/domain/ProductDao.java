@@ -1,5 +1,7 @@
 package com.narus.market.domain;
 
+import com.narus.market.persistence.entity.CategoryEntity;
+
 public class ProductDao {
 
     private int productId;
@@ -13,6 +15,8 @@ public class ProductDao {
     private int stock;
 
     private boolean isActive;
+
+    private CategoryEntity category;
 
     public int getProductId() {
         return productId;
@@ -60,5 +64,13 @@ public class ProductDao {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public CategoryEntity getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
     }
 }

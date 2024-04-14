@@ -32,8 +32,6 @@ public class ProductEntity {
     @JoinColumn(name = "id_categoria", insertable = false, updatable = false)
     private CategoryEntity category;
 
-
-
     public Integer getIdProduct() {
         return idProduct;
     }
@@ -88,5 +86,13 @@ public class ProductEntity {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public CategoryEntity getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
     }
 }
